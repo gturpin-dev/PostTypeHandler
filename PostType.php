@@ -34,6 +34,11 @@ class PostType {
 	private $labels;
 
 	/**
+	 * @var array Taxonomies for the post type.
+	 */
+	private $taxonomies = [];
+
+	/**
 	 * @param string $name Name of the post type.
 	 * @param array $options Options for the post type.
 	 * @param array $labels Labels for the post type.
@@ -120,6 +125,7 @@ class PostType {
 	public function register() {
 
 		add_action( 'init', [ $this, 'register_post_type' ], 15 );
+		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
 
 	}
 
@@ -132,6 +138,16 @@ class PostType {
 		$post_type_registerer = new PostTypeRegisterer( $this );
 
 		return $post_type_registerer->register_post_type();
+	}
+
+	/**
+	 * Register the taxonomies for the post type.
+	 *
+	 * @return void
+	 */
+	public function register_taxonomies() {
+		$post_type_registerer = new PostTypeRegisterer( $this );
+		$post_type_registerer->register_taxonomies();
 	}
 
 	/**
@@ -175,5 +191,28 @@ class PostType {
 
 	public function set_labels( array $labels ): array {
 		return $this->labels = $labels;
+	}
+
+	public function get_taxonomies(): array {
+		return $this->taxonomies;
+	}
+
+	/**
+	 * Setter for the taxonomies
+	 *
+	 * @param array|string $taxonomies Taxonomies to set.
+	 *
+	 * @return array
+	 */
+	public function set_taxonomies( $taxonomies ): array {
+		// bail early if not an array or string
+		if ( ! is_array( $taxonomies ) && ! is_string( $taxonomies ) ) return $this->taxonomies;
+		
+		
+		if ( is_string( $taxonomies ) ) {
+			$taxonomies = [ $taxonomies ];
+		}
+		
+		return $this->taxonomies = $taxonomies;
 	}
 }
