@@ -1,5 +1,5 @@
 # PostTypeHandler
-Class helpers to handle fast PostType and Taxonomies declarations
+Helper class to quickly manage PostType and Taxonomy declarations
 
 ## Usage
 Below is a basic example of setting up a simple PostType.
@@ -31,6 +31,20 @@ $options = [
 ];
 
 $post_type_handler = new PostType( 'Books', $options, $labels );
+$post_type_handler->register();
+```
+
+You can also set the taxonomies for the PostType.
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// add multiple taxonomies
+$post_type_handler->set_taxonomies( [ 'custom-taxonomy', 'post_tag' ] );
+
+// or add a single taxonomy
+$post_type_handler->set_taxonomies( 'custom-taxonomy' );
+
 $post_type_handler->register();
 ```
 
