@@ -36,10 +36,10 @@ $post_type_handler->register();
 
 ## Hooks
 
-| Hook type | hook_name                         | params         |
-| --------- | --------------------------------- | -------------- |
-| Filter    | gt_post_type_{$post_type}_labels  | array $labels  |
-| Filter    | gt_post_type_{$post_type}_options | array $options |
+| Hook type | Hook name                         | Params         | Description                          |
+| --------- | --------------------------------- | -------------- | ------------------------------------ |
+| Filter    | gt_post_type_{$post_type}_labels  | array $labels  | Custom the labels for the post type  |
+| Filter    | gt_post_type_{$post_type}_options | array $options | Custom the options for the post type |
 
 
 ## TODOS
