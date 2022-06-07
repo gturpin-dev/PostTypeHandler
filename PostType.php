@@ -3,6 +3,7 @@
 namespace PostTypeHandler;
 
 use PostTypeHandler\PostType\PostTypeRegisterer;
+use PostTypeHandler\PostType\TaxonomyRegisterer;
 use PostTypeHandler\PostType\PostTypeLabelsManager;
 use PostTypeHandler\PostType\PostTypeOptionsManager;
 
@@ -146,8 +147,8 @@ class PostType {
 	 * @return void
 	 */
 	public function register_taxonomies() {
-		$post_type_registerer = new PostTypeRegisterer( $this );
-		$post_type_registerer->register_taxonomies();
+		$taxonomy_registerer = new TaxonomyRegisterer( $this );
+		$taxonomy_registerer->register_taxonomies();
 	}
 
 	/**
