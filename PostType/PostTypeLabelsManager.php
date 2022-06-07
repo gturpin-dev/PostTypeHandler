@@ -68,6 +68,6 @@ final class PostTypeLabelsManager {
 		// replace defaults with the options passed
 		$labels = array_replace_recursive( $labels, $post_type->get_labels() );
 
-		return $labels;
+		return apply_filters( 'gt_post_type_' . $post_type->get_slug() . '_labels', $labels );
 	}
 }

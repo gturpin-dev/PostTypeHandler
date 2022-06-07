@@ -34,6 +34,14 @@ $post_type_handler = new PostType( 'Books', $options, $labels );
 $post_type_handler->register();
 ```
 
+## Hooks
+
+| Hook type | hook_name                        | params        |
+| --------- | -------------------------------- | ------------- |
+| Filter    | gt_post_type_{$post_type}_labels | array $labels |
+|           |                                  |               |
+|           |                                  |               |
+
+
 ## TODOS
 - Add filters to custom the params of the post type
-- Add filters to custom the labels of the post type
