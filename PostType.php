@@ -2,11 +2,15 @@
 
 namespace PostTypeHandler;
 
+use PostTypeHandler\Helpers\LabelsHandler;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
 use PostTypeHandler\PostType\PostTypeLabelsManager;
 use PostTypeHandler\PostType\PostTypeOptionsManager;
 
+/**
+ * Class to handle the registration of post types
+ */
 class PostType {
 
 	/**
@@ -76,9 +80,9 @@ class PostType {
 			$name = $this->name;
 		}
 
-		$post_type_labels_manager = new PostTypeLabelsManager();
+		$labels_handler = new LabelsHandler();
+		$slug           = $labels_handler->make_slug( $name );
 
-		$slug = $post_type_labels_manager->make_slug( $name );
 		return $this->set_slug( $slug );
 	}
 
@@ -88,9 +92,9 @@ class PostType {
 	 * @return string Plural name
 	 */
 	public function make_plural_name(): string {
-		$post_type_labels_manager = new PostTypeLabelsManager();
+		$labels_handler = new LabelsHandler();
+		$plural_name    = $labels_handler->make_plural_name( $this->name );
 
-		$plural_name = $post_type_labels_manager->make_plural_name( $this->name );
 		return $this->set_plural_name( $plural_name );
 	}
 

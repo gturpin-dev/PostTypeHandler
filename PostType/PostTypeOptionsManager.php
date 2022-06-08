@@ -21,10 +21,18 @@ final class PostTypeOptionsManager {
 			'rewrite' => [
 				'slug' => $post_type->get_slug(),
 			],
-			'capability_type' => 'post',
+			'menu_position'   => 6,
+			'capability_type' => 'page',
+			'hierarchical'    => true,
 			'has_archive'     => true,
 			'hierarchical'    => false,
-			'menu_icon'       => 'dashicons-admin-generic'
+			'menu_icon'       => 'dashicons-admin-generic',
+			'supports'        => [
+				'title',
+				'editor',
+				'thumbnail',
+				'excerpt',
+			],
 		];
 
 		// replace defaults with the options passed
