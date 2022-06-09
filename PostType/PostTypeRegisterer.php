@@ -6,7 +6,7 @@ use PostTypeHandler\PostType;
 
 final class PostTypeRegisterer {
 	
-	private $post_type;
+	private PostType $post_type;
 
 	public function __construct( PostType $post_type ) {
 		$this->post_type = $post_type;

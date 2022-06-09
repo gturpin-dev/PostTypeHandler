@@ -3,11 +3,14 @@
 namespace PostTypeHandler;
 
 use PostTypeHandler\Helpers\LabelsHandler;
+use PostTypeHandler\Taxonomy\TaxonomyRegisterer;
+use PostTypeHandler\Taxonomy\TaxonomyLabelsManager;
+use PostTypeHandler\Taxonomy\TaxonomyOptionsManager;
 
 /**
  * CLass to handle the registration of taxonomies
  */
-class Taxnonomy {
+class Taxonomy {
 
 	/**
 	 * @var string Name of the taxonomy.
@@ -90,7 +93,7 @@ class Taxnonomy {
 	 * @return array Options
 	 */
 	public function make_options() {
-		$taxonomy_options_manager = new TaxnonomyOptionsManager();
+		$taxonomy_options_manager = new TaxonomyOptionsManager();
 		
 		$options = $taxonomy_options_manager->make_options( $this );
 		return $this->set_options( $options );
@@ -102,10 +105,32 @@ class Taxnonomy {
 	 * @return array Labels
 	 */
 	public function make_labels() {
-		$taxonomy_labels_manager = new TaxnonomyLabelsManager();
+		$taxonomy_labels_manager = new TaxonomyLabelsManager();
 
 		$labels = $taxonomy_labels_manager->make_labels( $this );
 		return $this->set_labels( $labels );
+	}
+
+	/**
+	 * Register the post type stuff
+	 *
+	 * @return void
+	 */
+	public function register() {
+
+		add_action( 'init', [ $this, 'register_taxonomy' ], 15 );
+		
+	}
+
+	/**
+	 * Register the taxonomy himself
+	 *
+	 * @return WP_Taxonomy|WP_Error The registered taxonomy object on success, WP_Error object on failure
+	 */
+	public function register_taxonomy() {
+		$taxonomy_registerer = new TaxonomyRegisterer( $this );
+
+		return $taxonomy_registerer->register_taxonomy();
 	}
 
 	/**
@@ -119,6 +144,16 @@ class Taxnonomy {
 		$this->slug = $slug;
 
 		return $this->slug;
+	}
+
+	public function get_name(): string {
+		return $this->name;
+	}
+
+	public function set_name( string $name ): string {
+		$this->name = $name;
+
+		return $this->name;
 	}
 
 	public function get_plural_name(): string {
