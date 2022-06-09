@@ -48,6 +48,19 @@ $post_type_handler->set_taxonomies( 'custom-taxonomy' );
 $post_type_handler->register();
 ```
 
+You can Register a new Taxonomy and then even add it to the PostType declaration.
+
+```php
+// Register the Taxonomy
+$taxonomy_handler = new Taxonomy( 'custom-taxonomy' );
+$taxonomy_handler->register();
+
+// Add it to the PostType in PostType declaration
+$post_type_handler = new PostType( 'Books' );
+$post_type_handler->set_taxonomies( 'custom-taxonomy' );
+$post_type_handler->register();
+```
+
 ## Hooks
 
 | Hook type | Hook name                         | Params         | Description                          |
