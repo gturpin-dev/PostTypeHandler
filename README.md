@@ -1,6 +1,19 @@
 # PostTypeHandler
 Helper class to quickly manage PostType and Taxonomy declarations
 
+## Installation
+
+**Install with composer**
+
+Run the following in your terminal to install the package with composer
+
+```sh
+composer require gturpin/post-type-handler
+```
+
+The package use the autoloader, so don't forget to register the autoloader.
+If you don't know how see the basic example below.
+
 ## Usage
 Below is a basic example of setting up a simple PostType.
 
