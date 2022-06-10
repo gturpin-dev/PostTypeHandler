@@ -1,0 +1,17 @@
+{
+    "name": "gturpin/post-type-handler",
+    "description": "Helper class to quickly manage PostType and Taxonomy declarations",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "PostTypeHandler\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gturpin-dev",
+            "email": "guillaume.turpin45@gmail.com"
+        }
+    ],
+    "require": {}
+}
