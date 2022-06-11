@@ -83,7 +83,7 @@ Or you can set the taxonomy to a Post Type that is already registered.
 
 ```php
 $taxonomy_handler = new Taxonomy( 'custom-taxo' );
-$taxonomy_handler->set_post_types( 'books' );
+$taxonomy_handler->set_post_types( 'books' ); // work aswell with an array : [ 'books', $post_type_object ]
 $taxonomy_handler->register();
 ```
 
