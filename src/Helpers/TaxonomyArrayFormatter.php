@@ -2,6 +2,8 @@
 
 namespace PostTypeHandler\Helpers;
 
+use PostTypeHandler\Taxonomy;
+
 /**
  * Class to format arrays of taxonomies
  */
@@ -16,17 +18,19 @@ class TaxonomyArrayFormatter {
 	 * @return array Formatted taxonomies.
 	 */
 	public function format( $taxonomies ) {
-		// bail early if not an array or string or Taxonomy object
-		if ( ! is_array( $taxonomies ) && ! is_string( $taxonomies ) && ! is_a( $taxonomies, 'PostTypeHandler\Taxonomy' ) ) return $taxonomies;
-
 		// convert to array
 		if ( ! is_array( $taxonomies ) ) {
 			$taxonomies = [ $taxonomies ];
 		}
 
+		// delete entry that are not string or Taxonomy
+		$taxonomies = array_filter( $taxonomies, function( $taxonomy ) {
+			return is_string( $taxonomy ) || $taxonomy instanceof Taxonomy;
+		} );
+
 		// convert Taxonomy objects to slug
 		$taxonomies = array_map( function( $taxonomy ) {
-			if ( is_a( $taxonomy, 'PostTypeHandler\Taxonomy' ) ) {
+			if ( $taxonomy instanceof Taxonomy ) {
 				return $taxonomy->get_slug();
 			}
 			return $taxonomy;
