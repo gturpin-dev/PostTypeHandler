@@ -5,6 +5,7 @@ namespace PostTypeHandler;
 use PostTypeHandler\Helpers\LabelsHandler;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
+use PostTypeHandler\Helpers\TaxonomyArrayFormatter;
 use PostTypeHandler\PostType\PostTypeLabelsManager;
 use PostTypeHandler\PostType\PostTypeOptionsManager;
 
@@ -204,20 +205,15 @@ class PostType {
 
 	/**
 	 * Setter for the taxonomies
+	 * TODO: Add new class to format taxonomy array
 	 *
 	 * @param array|string $taxonomies Taxonomies to set.
 	 *
 	 * @return array
 	 */
 	public function set_taxonomies( $taxonomies ): array {
-		// bail early if not an array or string
-		if ( ! is_array( $taxonomies ) && ! is_string( $taxonomies ) ) return $this->taxonomies;
+		$taxonomy_formatter = new TaxonomyArrayFormatter();
 		
-		
-		if ( is_string( $taxonomies ) ) {
-			$taxonomies = [ $taxonomies ];
-		}
-		
-		return $this->taxonomies = $taxonomies;
+		return $this->taxonomies = $taxonomy_formatter->format( $taxonomies );
 	}
 }

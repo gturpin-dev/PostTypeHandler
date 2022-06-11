@@ -99,7 +99,7 @@ $taxonomy_handler->register();
 
 ## TODOS
 
-- Can also add taxonomy by sending the object itself ( by the object itself, maybe with a __tostring method )
+- ~~Can also add taxonomy by sending the object itself ( by the object itself, maybe with a __tostring method )~~
 - Adding a way to manage Columns
   - Hide columns and defaults for each post type
   - Adding new columns to the admin screen

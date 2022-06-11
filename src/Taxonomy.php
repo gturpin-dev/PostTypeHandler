@@ -36,7 +36,7 @@ class Taxonomy {
 	/**
 	 * @var array Post types for the taxonomy.
 	 */
-	private $post_types;
+	private $post_types = [];
 
 	/**
 	 * @param string $name Name of the post type.
