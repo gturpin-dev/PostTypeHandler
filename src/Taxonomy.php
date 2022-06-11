@@ -3,6 +3,7 @@
 namespace PostTypeHandler;
 
 use PostTypeHandler\Helpers\LabelsHandler;
+use PostTypeHandler\Taxonomy\PostTypeRegisterer;
 use PostTypeHandler\Taxonomy\TaxonomyRegisterer;
 use PostTypeHandler\Taxonomy\TaxonomyLabelsManager;
 use PostTypeHandler\Taxonomy\TaxonomyOptionsManager;
@@ -31,6 +32,11 @@ class Taxonomy {
 	 * @var array Labels for the taxonomy.
 	 */
 	private $labels;
+
+	/**
+	 * @var array Post types for the taxonomy.
+	 */
+	private $post_types;
 
 	/**
 	 * @param string $name Name of the post type.
@@ -119,6 +125,7 @@ class Taxonomy {
 	public function register() {
 
 		add_action( 'init', [ $this, 'register_taxonomy' ], 15 );
+		add_action( 'init', [ $this, 'register_post_types' ], 15 );
 		
 	}
 
@@ -131,6 +138,16 @@ class Taxonomy {
 		$taxonomy_registerer = new TaxonomyRegisterer( $this );
 
 		return $taxonomy_registerer->register_taxonomy();
+	}
+
+	/**
+	 * Register the post types for the taxonomy.
+	 *
+	 * @return void
+	 */
+	public function register_post_types() {
+		$post_type_registerer = new PostTypeRegisterer( $this );
+		$post_type_registerer->register_post_types();
 	}
 
 	/**
@@ -184,5 +201,27 @@ class Taxonomy {
 		$this->labels = $labels;
 
 		return $this->labels;
+	}
+
+	public function get_post_types(): array {
+		return $this->post_types;
+	}
+
+	/**
+	 * Setter for the post types
+	 *
+	 * @param array|string $taxonomies Post types to set
+	 *
+	 * @return array
+	 */
+	public function set_post_types( $post_types ): array {
+		// bail early if not an array or string
+		if ( ! is_array( $post_types ) && ! is_string( $post_types ) ) return $this->post_types;
+		
+		if ( is_string( $post_types ) ) {
+			$post_types = [ $post_types ];
+		}
+		
+		return $this->post_types = $post_types;
 	}
 }
