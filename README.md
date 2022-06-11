@@ -87,6 +87,17 @@ $taxonomy_handler->set_post_types( 'books' );
 $taxonomy_handler->register();
 ```
 
+You can give the Taxonomy object itself to the PostType.
+
+```php
+$taxonomy_handler = new Taxonomy( 'custom-taxo' );
+$taxonomy_handler->register();
+
+$post_type_handler = new PostType( 'Books' );
+$post_type_handler->set_taxonomies( $taxonomy_handler ); // work aswell with an array : [ 'post_tag', $taxonomy_handler ]
+$post_type_handler->register();
+```
+
 ## Hooks
 
 | Hook type | Hook name                         | Params         | Description                          |
