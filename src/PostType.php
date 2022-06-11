@@ -205,15 +205,14 @@ class PostType {
 
 	/**
 	 * Setter for the taxonomies
-	 * TODO: Add new class to format taxonomy array
 	 *
-	 * @param array|string $taxonomies Taxonomies to set.
+	 * @param array|string|Taxonomy $taxonomies Taxonomies to set.
 	 *
 	 * @return array
 	 */
 	public function set_taxonomies( $taxonomies ): array {
 		$taxonomy_formatter = new TaxonomyArrayFormatter();
-		
+
 		return $this->taxonomies = $taxonomy_formatter->format( $taxonomies );
 	}
 }

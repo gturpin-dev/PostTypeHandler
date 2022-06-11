@@ -5,6 +5,7 @@ namespace PostTypeHandler;
 use PostTypeHandler\Helpers\LabelsHandler;
 use PostTypeHandler\Taxonomy\PostTypeRegisterer;
 use PostTypeHandler\Taxonomy\TaxonomyRegisterer;
+use PostTypeHandler\Helpers\PostTypeArrayFormatter;
 use PostTypeHandler\Taxonomy\TaxonomyLabelsManager;
 use PostTypeHandler\Taxonomy\TaxonomyOptionsManager;
 
@@ -210,18 +211,13 @@ class Taxonomy {
 	/**
 	 * Setter for the post types
 	 *
-	 * @param array|string $taxonomies Post types to set
+	 * @param array|string|PostType $taxonomies Post types to set
 	 *
 	 * @return array
 	 */
 	public function set_post_types( $post_types ): array {
-		// bail early if not an array or string
-		if ( ! is_array( $post_types ) && ! is_string( $post_types ) ) return $this->post_types;
-		
-		if ( is_string( $post_types ) ) {
-			$post_types = [ $post_types ];
-		}
-		
-		return $this->post_types = $post_types;
+		$post_type_formatter = new PostTypeArrayFormatter();
+
+		return $this->post_types = $post_type_formatter->format( $post_types );
 	}
 }
