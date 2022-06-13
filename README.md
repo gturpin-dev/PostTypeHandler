@@ -19,7 +19,7 @@ composer require gturpin/post-type-handler
 The package use the autoloader, so don't forget to register the autoloader.
 If you don't know how see the basic example below.
 
-## Usage
+## Basic Usage
 Below is a basic example of setting up a simple PostType.
 
 ```php
@@ -95,6 +95,63 @@ $taxonomy_handler->register();
 
 $post_type_handler = new PostType( 'Books' );
 $post_type_handler->set_taxonomies( $taxonomy_handler ); // work aswell with an array : [ 'post_tag', $taxonomy_handler ]
+$post_type_handler->register();
+```
+
+## Manage Post Types columns
+I will explain some examples of how to manage the columns for a Post Type.
+
+Firstly, you need to register the Post Type.  
+Then you can do stuff with the columns.  
+Finally you need to save the changes by registering the Post Type.
+
+### Add a new column
+To add new columns to a Post Type you can do the following
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// Call the columns function to get access to the column manager and add a new column
+$post_type_handler->columns()->add( [
+	'custom-slug' => 'Custom label',
+	'year'        => 'Year',
+] );
+
+// You can also pass only one slug and label
+$post_type_handler->columns()->add( 'custom-slug', 'Custom label' );
+$post_type_handler->register();
+```
+
+### Hide a column
+To hide a column you can do the following
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// Call the columns function to get access to the column manager and hide a built-in column or a custom one
+$post_type_handler->columns()->hide( [
+	'custom-slug',
+	'date'
+] );
+
+// You can also hide only one column
+$post_type_handler->columns()->hide( 'year' );
+$post_type_handler->register();
+```
+
+### Set all columns
+You can set all columns at once  
+By doing this you must take a look at the [Manage columns hook](https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/) to prevent unwanted columns
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// Call the columns function to get access to the column manager and set all columns
+$post_type_handler->columns()->set( [
+	'custom-slug' => 'Custom label',
+	'year'        => 'Year',
+] );
+
 $post_type_handler->register();
 ```
 
