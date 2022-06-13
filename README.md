@@ -124,5 +124,6 @@ $post_type_handler->register();
 - ~~Add a class to manage the taxonomies~~
   - ~~Adding new Taxonomies~~
   - Can work on existing taxonomies ( post_tag & category )
-  - Can be registered on a post type directly ( by the slug or the object itself, maybe with a __tostring method )
+  - ~~Can be registered on a post type directly ( by the slug or the object itself, maybe with a __tostring method )~~
 - Same columns but for the taxonomies
+- Can work on existing post types ( update options and labels )

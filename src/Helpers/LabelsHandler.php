@@ -15,7 +15,7 @@ class LabelsHandler {
 	 * @return string Slug
 	 */
 	public function make_slug( string $name ) {
-		return sanitize_key( $name );
+		return sanitize_title( $name );
 	}
 
 	/**
