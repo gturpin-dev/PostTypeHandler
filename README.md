@@ -112,10 +112,10 @@ $post_type_handler->register();
 
 - ~~Can also add taxonomy by sending the object itself ( by the object itself, maybe with a __tostring method )~~
 - Adding a way to manage Columns
-  - Hide columns and defaults for each post type
-  - Adding new columns to the admin screen
+  - ~~Hide columns and defaults for each post type~~
+  - ~~Adding new columns to the admin screen~~
   - Set columns order
-  - Set the entire columns array
+  - ~~Set the entire columns array~~
   - Populate any column with a custom function
   - Can sort each columns with their values ( numerically / alphabetically )
 - Adding a function to easily add icon without using the $options array
@@ -127,3 +127,4 @@ $post_type_handler->register();
   - ~~Can be registered on a post type directly ( by the slug or the object itself, maybe with a __tostring method )~~
 - Same columns but for the taxonomies
 - Can work on existing post types ( update options and labels )
+- Add the @link/author/license to the main class

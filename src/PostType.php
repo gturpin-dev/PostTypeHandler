@@ -2,6 +2,7 @@
 
 namespace PostTypeHandler;
 
+use PostTypeHandler\Columns\Columns;
 use PostTypeHandler\Helpers\LabelsHandler;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
@@ -43,6 +44,11 @@ class PostType {
 	 * @var array Taxonomies for the post type.
 	 */
 	private $taxonomies = [];
+
+	/**
+	 * @var Columns Columns for the post type.
+	 */
+	private Columns $columns;
 
 	/**
 	 * @param string $name Name of the post type.
@@ -133,6 +139,11 @@ class PostType {
 		add_action( 'init', [ $this, 'register_post_type' ], 15 );
 		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
 
+		if ( isset( $this->columns ) ) {
+			// Modify the admin columns for the post type
+			add_filter( 'manage_books_posts_columns', [ $this->columns, 'register' ] );
+			add_filter( 'manage_' . $this->get_slug() . '_posts_columns', [ $this->columns, 'register' ] );
+		}
 	}
 
 	/**
@@ -154,6 +165,19 @@ class PostType {
 	public function register_taxonomies() {
 		$taxonomy_registerer = new TaxonomyRegisterer( $this );
 		$taxonomy_registerer->register_taxonomies();
+	}
+
+	/**
+	 * Get the Column Manager for the post type.
+	 *
+	 * @return PostTypeHandler\Columns\Columns
+	 */
+	public function columns() {
+		if ( ! isset( $this->columns ) ) {
+			$this->columns = new Columns();
+		}
+
+		return $this->columns;
 	}
 
 	/**

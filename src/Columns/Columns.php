@@ -2,6 +2,8 @@
 
 namespace PostTypeHandler\Columns;
 
+use PostTypeHandler\Columns\ColumnsRegisterer;
+
 /**
  * Class to handle admin columns for the post type.
  */
@@ -15,9 +17,24 @@ class Columns {
 	private $columns_to_add = [];
 
 	/**
+	 * An array of columns to hide.
+	 *
+	 * @var array
+	 */
+	private $columns_to_hide = [];
+
+	/**
+	 * The final set of columns.
+	 *
+	 * @var array
+	 */
+	private $columns = [];
+
+	/**
 	 * Add a new column to the post type.
 	 *
 	 * @param string|array $columns The column slug or an array of columns.
+	 * 								The array key is the column slug and the value is the label.
 	 * @param string $label The label for the column.
 	 *
 	 * @return void
@@ -34,11 +51,80 @@ class Columns {
 				$label = str_replace( [ '_', '-' ], ' ', ucfirst( $column ) );
 			}
 
-			$column = sanitize_key( $column );
+			$column = sanitize_title( $column );
 
-			$this->columns_to_add[ $column ] = $label;
+			$this->columns_to_add[ $column ] = ucfirst( $label );
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Hide a column from the post type.
+	 *
+	 * @param string|array $columns
+	 *
+	 * @return void
+	 */
+	public function hide( $columns ) {
+		// convert to array if only one column was passed
+		if ( ! is_array( $columns ) ) {
+			$columns = [ $columns ];
+		}
+
+		foreach ( $columns as $column ) {
+			$this->columns_to_hide[] = $column;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Set all columns.
+	 * Be careful with this method. It will replace all columns and there is no handle on params.
+	 *
+	 * @see https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/ for built in columns.
+	 * 
+	 * @param array $columns 
+	 *
+	 * @return void
+	 */
+	public function set( $columns ) {
+		$this->columns = $columns;
+	}
+
+	/**
+	 * Register the columns for the post type.
+	 * 
+	 * @param array $columns The built in columns.
+	 * 
+	 * @see PostTypeHandler\Columns\ColumnsRegisterer::register()
+	 * @see https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/ for built in columns.
+	 *
+	 * @return array The updated columns without built in ones.
+	 */
+	public function register( $columns ) {
+		$columns_registerer = new ColumnsRegisterer( $this, $columns );
+		
+		return $columns_registerer->register();
+	}
+
+	/**
+	 * Getters & Setters
+	 */
+	public function get_columns() {
+		return $this->columns;
+	}
+
+	public function set_columns( array $columns ) {
+		return $this->columns = $columns;
+	}
+
+	public function get_columns_to_add() {
+		return $this->columns_to_add;
+	}
+
+	public function get_columns_to_hide() {
+		return $this->columns_to_hide;
 	}
 }
