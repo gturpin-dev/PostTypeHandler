@@ -4,6 +4,7 @@ namespace PostTypeHandler;
 
 use PostTypeHandler\Columns\Columns;
 use PostTypeHandler\Helpers\LabelsHandler;
+use PostTypeHandler\Columns\ColumnsSortSortable;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
 use PostTypeHandler\Helpers\TaxonomyArrayFormatter;
@@ -148,6 +149,9 @@ class PostType {
 
 			// Run filter to make columns sortable.
             add_filter('manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
+
+			// Run action that sorts columns on request.
+            add_action( 'pre_get_posts', [ $this->columns, 'sort_sortable_columns' ], 15 );
 		}
 	}
 
@@ -183,6 +187,18 @@ class PostType {
 		}
 
 		return $this->columns;
+	}
+
+	/**
+	 * Update the query to sort by the custom column.
+	 *
+	 * @param \WP_Query $query The query to update.
+	 *
+	 * @return void
+	 */
+	public function sort_sortable_columns( \WP_Query $query ) {
+		$sort_sortable_columns = new ColumnsSortSortable( $this );
+		$sort_sortable_columns->sort_column( $query );
 	}
 
 	/**

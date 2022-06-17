@@ -2,7 +2,6 @@
 
 namespace PostTypeHandler\Columns;
 
-use PostTypeHandler\Columns\ColumnsSortable;
 use PostTypeHandler\Columns\ColumnsRegisterer;
 
 /**
@@ -141,9 +140,17 @@ class Columns {
 		return $this;
 	}
 
-	public function sortable_columns( array $columns ) {
+	/**
+	 * Check if an orderby param is a custom sort column.
+	 *
+	 * @param string $order_by The orderby value from query param.
+	 *
+	 * @return boolean True if the orderby param is a custom sort column.
+	 */
+	public function is_sortable( string $order_by ) {
 		$columns_sortable = new ColumnsSortable( $this );
-		return $columns_sortable->sortable( $columns );
+
+		return $columns_sortable->is_sortable( $order_by );
 	}
 
 	/**

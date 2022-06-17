@@ -33,4 +33,33 @@ class ColumnsSortable {
 
 		return $columns;
 	}
+
+	/**
+	 * Check if an orderby param is a custom sort column.
+	 *
+	 * @param string $order_by The orderby value from query param.
+	 *
+	 * @return boolean True if the orderby param is a custom sort column.
+	 */
+	public function is_sortable( string $order_by ) {
+		$columns_to_sort = $this->columns_handler->get_columns_to_sort();
+
+		if ( array_key_exists( $order_by, $columns_to_sort ) ) {
+			return true;
+		}
+
+		foreach ( $columns_to_sort as $column => $column_options ) {
+			// If the order_by param is a custom sort column, return true.
+			if ( is_string( $column_options ) && $column_options === $order_by ) {
+				return true;
+			}
+
+			// If the order_by param is a the first param of options array, return true.
+			if ( is_array( $column_options ) && isset( $options[0] ) && $options[0] === $order_by ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
