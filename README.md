@@ -113,8 +113,8 @@ $post_type_handler = new PostType( 'Books' );
 
 // Call the columns function to get access to the column manager and add a new column
 $post_type_handler->columns()->add( [
-	'custom-slug' => 'Custom label',
-	'year'        => 'Year',
+	'custom-slug' => __( 'Custom label', 'context' ),
+	'year'        => __( 'Year', 'context' ),
 ] );
 
 // You can also pass only one slug and label
@@ -151,6 +151,23 @@ $post_type_handler->columns()->set( [
 	'custom-slug' => 'Custom label',
 	'year'        => 'Year',
 ] );
+
+$post_type_handler->register();
+```
+
+### Populate a column
+To populate a column you can do the following  
+Note that you can only populate one column at once  
+Note that you must display the content and not return it  
+> You can't use this to populate a [built-in column](https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/#more-information)
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// Call the columns function to get access to the column manager and populate a column
+$post_type_handler->columns()->populate( 'custom-slug', function( $column, $post_id ) {
+	echo get_the_title( $post_id );
+} );
 
 $post_type_handler->register();
 ```
