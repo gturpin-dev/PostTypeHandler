@@ -24,7 +24,7 @@ final class ColumnsRegisterer {
 	/**
 	 * Register the columns with the post type.
 	 * 
-	 * @see https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/ for built in columns.
+	 * @see https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/#more-information for built in columns.
 	 *
 	 * @return array The updated columns without built in ones.
 	 */

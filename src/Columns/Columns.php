@@ -2,6 +2,7 @@
 
 namespace PostTypeHandler\Columns;
 
+use PostTypeHandler\Columns\ColumnsSortable;
 use PostTypeHandler\Columns\ColumnsRegisterer;
 
 /**
@@ -29,6 +30,13 @@ class Columns {
 	 * @var array
 	 */
 	private $columns_to_populate = [];
+
+	/**
+	 * An array of columns to sort.
+	 *
+	 * @var array
+	 */
+	private $columns_to_sort = [];
 
 	/**
 	 * The final set of columns.
@@ -95,10 +103,12 @@ class Columns {
 	 * 
 	 * @param array $columns 
 	 *
-	 * @return void
+	 * @return Columns The current instance of the class.
 	 */
 	public function set( $columns ) {
 		$this->columns = $columns;
+
+		return $this;
 	}
 
 	/**
@@ -114,6 +124,26 @@ class Columns {
 		$this->columns_to_populate[ $column ] = $callback;
 
 		return $this;
+	}
+
+	/**
+	 * Store the columns to sort by.
+	 *
+	 * @param array $columns_to_sort An array of columns to sort by.
+	 *
+	 * @return Columns The current instance of the class.
+	 */
+	public function sortable( array $columns_to_sort ) {
+		foreach ( $columns_to_sort as $column => $options ) {
+            $this->columns_to_sort[ $column ] = $options;
+        }
+		
+		return $this;
+	}
+
+	public function sortable_columns( array $columns ) {
+		$columns_sortable = new ColumnsSortable( $this );
+		return $columns_sortable->sortable( $columns );
 	}
 
 	/**
@@ -171,5 +201,9 @@ class Columns {
 
 	public function get_columns_to_populate() {
 		return $this->columns_to_populate;
+	}
+
+	public function get_columns_to_sort() {
+		return $this->columns_to_sort;
 	}
 }

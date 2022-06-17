@@ -145,6 +145,9 @@ class PostType {
 
 			// Populate the admin columns for the post type
 			add_action( 'manage_' . $this->get_slug() . '_posts_custom_column', [ $this->columns, 'populate_columns' ], 15, 2 );
+
+			// Run filter to make columns sortable.
+            add_filter('manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
 		}
 	}
 
