@@ -178,8 +178,8 @@ $post_type_handler->register();
 | --------- | --------------------------------- | -------------- | ------------------------------------ |
 | Filter    | gt_post_type_{$post_type}_labels  | array $labels  | Custom the labels for the post type  |
 | Filter    | gt_post_type_{$post_type}_options | array $options | Custom the options for the post type |
-| Filter    | gt_taxonomy_{$post_type}_labels  | array $labels  | Custom the labels for the taxonomy  |
-| Filter    | gt_taxonomy_{$post_type}_options | array $options | Custom the options for the taxonomy |
+| Filter    | gt_taxonomy_{$post_type}_labels   | array $labels  | Custom the labels for the taxonomy   |
+| Filter    | gt_taxonomy_{$post_type}_options  | array $options | Custom the options for the taxonomy  |
 
 
 ## TODOS
@@ -190,7 +190,7 @@ $post_type_handler->register();
   - ~~Adding new columns to the admin screen~~
   - Set columns order
   - ~~Set the entire columns array~~
-  - Populate any column with a custom function
+  - ~~Populate any column with a custom function~~
   - Can sort each columns with their values ( numerically / alphabetically )
 - Adding a function to easily add icon without using the $options array
 - Adding a way to manage the Filters on screen admin
