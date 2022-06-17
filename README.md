@@ -172,6 +172,22 @@ $post_type_handler->columns()->populate( 'custom-slug', function( $column, $post
 $post_type_handler->register();
 ```
 
+### Make a column sortable
+To make a column sortable you can do the following
+Note that you must make the column slug in key and value of the array
+
+```php
+$post_type_handler = new PostType( 'Books' );
+
+// Call the columns function to get access to the column manager and make a column sortable
+$post_type_handler->columns()->sortable( [
+	'rating' => 'rating',
+	'year'   => 'year',
+] );
+
+$post_type_handler->register();
+```
+
 ## Hooks
 
 | Hook type | Hook name                         | Params         | Description                          |
