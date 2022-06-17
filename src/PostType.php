@@ -128,7 +128,7 @@ class PostType {
 		$labels = $post_type_labels_manager->make_labels( $this );
 		return $this->set_labels( $labels );
 	}
-	
+
 	/**
 	 * Register the post type stuff
 	 *
@@ -141,8 +141,10 @@ class PostType {
 
 		if ( isset( $this->columns ) ) {
 			// Modify the admin columns for the post type
-			add_filter( 'manage_books_posts_columns', [ $this->columns, 'register' ] );
-			add_filter( 'manage_' . $this->get_slug() . '_posts_columns', [ $this->columns, 'register' ] );
+			add_filter( 'manage_' . $this->get_slug() . '_posts_columns', [ $this->columns, 'register' ], 15 );
+
+			// Populate the admin columns for the post type
+			add_action( 'manage_' . $this->get_slug() . '_posts_custom_column', [ $this->columns, 'populate_columns' ], 15, 2 );
 		}
 	}
 

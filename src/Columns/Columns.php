@@ -24,11 +24,19 @@ class Columns {
 	private $columns_to_hide = [];
 
 	/**
+	 * An array of columns to populate.
+	 *
+	 * @var array
+	 */
+	private $columns_to_populate = [];
+
+	/**
 	 * The final set of columns.
 	 *
 	 * @var array
 	 */
 	private $columns = [];
+
 
 	/**
 	 * Add a new column to the post type.
@@ -37,7 +45,7 @@ class Columns {
 	 * 								The array key is the column slug and the value is the label.
 	 * @param string $label The label for the column.
 	 *
-	 * @return void
+	 * @return Columns The current instance of the class.
 	 */
 	public function add( $columns, $label = null ) {
 		// convert to array if only one column was passed
@@ -64,7 +72,7 @@ class Columns {
 	 *
 	 * @param string|array $columns
 	 *
-	 * @return void
+	 * @return Columns The current instance of the class.
 	 */
 	public function hide( $columns ) {
 		// convert to array if only one column was passed
@@ -91,6 +99,39 @@ class Columns {
 	 */
 	public function set( $columns ) {
 		$this->columns = $columns;
+	}
+
+	/**
+	 * Store a column to populate.
+	 * 
+	 * @param string $column The column slug.
+	 * @param callable $callback The callback to use to populate the column.
+	 *                           The first param is the column value and the second is the post ID.
+	 *
+	 * @return Columns The current instance of the class.
+	 */
+	public function populate( string $column, callable $callback ) {
+		$this->columns_to_populate[ $column ] = $callback;
+
+		return $this;
+	}
+
+	/**
+	 * Populate a column with data.
+	 *
+	 * @param string $column The column slug.
+	 * @param int $post_id The post ID.
+	 * 
+	 * @see PostTypeHandler\Columns\ColumnsPopulate::populate()
+	 * @see https://developer.wordpress.org/reference/hooks/manage_post-post_type_posts_custom_column/ #parameters
+	 *
+	 * @return Columns The current instance of the class.
+	 */
+	public function populate_columns( string $column, int $post_id ) {
+		$columns_populate = new ColumnsPopulate( $this );
+		$columns_populate->populate( $column, $post_id );
+
+		return $this;
 	}
 
 	/**
@@ -126,5 +167,9 @@ class Columns {
 
 	public function get_columns_to_hide() {
 		return $this->columns_to_hide;
+	}
+
+	public function get_columns_to_populate() {
+		return $this->columns_to_populate;
 	}
 }
