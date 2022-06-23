@@ -176,7 +176,8 @@ $post_type_handler->register();
 ### Make a column sortable
 To make a column sortable you can do the following  
 Note that you must make the column slug in key and value of the array  
-The value must be the name of the meta key
+The value must be the name of the meta key  
+Don't forget to populate the column before you make it sortable  
 
 ```php
 $post_type_handler = new PostType( 'Books' );
