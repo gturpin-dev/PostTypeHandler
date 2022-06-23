@@ -28,7 +28,6 @@ class ColumnsSortable {
 		$columns_to_sort = $this->columns_handler->get_columns_to_sort();
 
 		if ( ! empty( $columns_to_sort ) ) {
-			echo '<pre>' . print_r( array_merge( $columns, $columns_to_sort ), 1 ) . '</pre>';
 			return array_merge( $columns, $columns_to_sort );
 		}
 
