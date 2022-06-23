@@ -28,6 +28,7 @@ class ColumnsSortable {
 		$columns_to_sort = $this->columns_handler->get_columns_to_sort();
 
 		if ( ! empty( $columns_to_sort ) ) {
+			echo '<pre>' . print_r( array_merge( $columns, $columns_to_sort ), 1 ) . '</pre>';
 			return array_merge( $columns, $columns_to_sort );
 		}
 
@@ -60,6 +61,23 @@ class ColumnsSortable {
 			}
 		}
 
+		return false;
+	}
+
+	/**
+	 * Retrieve the meta from the orderby value.
+	 *
+	 * @param string $order_by The orderby value from query param.
+	 *
+	 * @return array|bool The meta to sort by. False if not sortable.
+	 */
+	public function retrieve_sortable_meta( string $order_by ) {
+		$columns_to_sort = $this->columns_handler->get_columns_to_sort();
+		
+		if ( array_key_exists( $order_by, $columns_to_sort ) ) {
+			return $columns_to_sort[ $order_by ];
+		}
+		
 		return false;
 	}
 }

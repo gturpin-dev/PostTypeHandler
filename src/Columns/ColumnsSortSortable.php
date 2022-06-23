@@ -25,17 +25,32 @@ class ColumnsSortSortable {
 	 * @return void
 	 */
 	public function sort_column( \WP_Query $query ) {
-		
+
 		// bail early if we weren't in the post type admin
 		if ( ! is_admin() ) return;
-		if ( $query->get( 'post_type' !== $this->post_type_handler->get_slug() ) ) return;
-
+		if ( $query->get( 'post_type' ) !== $this->post_type_handler->get_slug() ) return;
+		
 		$order_by = $query->get( 'orderby' );
-
+		
+		$columns_object = $this->post_type_handler->columns();
+		
 		// bail early if the column isn't sortable
-		if ( ! $this->post_type_handler->columns()->is_sortable( $order_by ) ) return;
+		if ( ! $columns_object->is_sortable( $order_by ) ) return;
 
-		// Determine the type of ordering to apply.
+		// Get the custom column options
+		$meta = $columns_object->retrieve_sortable_meta( $order_by );
+
+		// Determine the typo of ordering to use
+		if ( is_string( $meta ) || ! isset( $meta[1] ) ) {
+			$meta_key   = $meta;
+			$meta_value = 'meta_value';
+		} else {
+			$meta_key   = $meta[0];
+			$meta_value = 'meta_value_num';
+		}
+		
 		// Set the custom order
+		$query->set( 'meta_key', $meta_key );
+		$query->set( 'orderby', $meta_value );
 	}
 }

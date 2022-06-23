@@ -148,10 +148,10 @@ class PostType {
 			add_action( 'manage_' . $this->get_slug() . '_posts_custom_column', [ $this->columns, 'populate_columns' ], 15, 2 );
 
 			// Run filter to make columns sortable.
-            add_filter('manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
+            add_filter( 'manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
 
 			// Run action that sorts columns on request.
-            add_action( 'pre_get_posts', [ $this->columns, 'sort_sortable_columns' ], 15 );
+            add_action( 'pre_get_posts', [ $this, 'sort_sortable_columns' ], 15 );
 		}
 	}
 

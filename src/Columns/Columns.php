@@ -141,6 +141,21 @@ class Columns {
 	}
 
 	/**
+	 * Return the columns to sort.
+	 *
+	 * @param array $columns The built in columns.
+	 * 
+	 * @see https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/#more-information for built in columns.
+	 *
+	 * @return array The sortable columns.
+	 */
+	public function sortable_columns( array $columns ) {
+		$columns_sortable = new ColumnsSortable( $this );
+
+		return $columns_sortable->sortable( $columns );
+	}
+
+	/**
 	 * Check if an orderby param is a custom sort column.
 	 *
 	 * @param string $order_by The orderby value from query param.
@@ -151,6 +166,19 @@ class Columns {
 		$columns_sortable = new ColumnsSortable( $this );
 
 		return $columns_sortable->is_sortable( $order_by );
+	}
+
+	/**
+	 * Retrieve the meta from the orderby value.
+	 *
+	 * @param string $order_by The orderby value from query param.
+	 *
+	 * @return array|bool The meta to sort by. False if not sortable.
+	 */
+	public function retrieve_sortable_meta( string $order_by ) {
+		$columns_sortable = new ColumnsSortable( $this );
+
+		return $columns_sortable->retrieve_sortable_meta( $order_by );
 	}
 
 	/**
