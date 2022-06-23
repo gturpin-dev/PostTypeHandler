@@ -5,6 +5,7 @@ Helper class to quickly manage PostType and Taxonomy declarations
 - Easily add new Post Types
 - Easily add new Taxonomies
 - Easily link Post Types to Taxonomies & vice versa
+- Easily add new columns to the admin and manage them ( populate, sort )
 
 ## Installation
 
@@ -16,7 +17,7 @@ Run the following in your terminal to install the package with composer
 composer require gturpin/post-type-handler
 ```
 
-The package use the autoloader, so don't forget to register the autoloader.
+The package use the autoloader, so don't forget to register the autoloader.  
 If you don't know how see the basic example below.
 
 ## Basic Usage
@@ -99,7 +100,7 @@ $post_type_handler->register();
 ```
 
 ## Manage Post Types columns
-I will explain some examples of how to manage the columns for a Post Type.
+I will explain some examples of how to manage the columns for a Post Type.  
 
 Firstly, you need to register the Post Type.  
 Then you can do stuff with the columns.  
@@ -173,8 +174,9 @@ $post_type_handler->register();
 ```
 
 ### Make a column sortable
-To make a column sortable you can do the following
-Note that you must make the column slug in key and value of the array
+To make a column sortable you can do the following  
+Note that you must make the column slug in key and value of the array  
+The value must be the name of the meta key
 
 ```php
 $post_type_handler = new PostType( 'Books' );
@@ -182,7 +184,7 @@ $post_type_handler = new PostType( 'Books' );
 // Call the columns function to get access to the column manager and make a column sortable
 $post_type_handler->columns()->sortable( [
 	'rating' => 'rating',
-	'year'   => 'year',
+	'year'   => [ 'year', true ], // You can add true to make the sort by numeric order or false to make it by alphabetical order which is the default
 ] );
 
 $post_type_handler->register();
@@ -207,7 +209,7 @@ $post_type_handler->register();
   - Set columns order
   - ~~Set the entire columns array~~
   - ~~Populate any column with a custom function~~
-  - Can sort each columns with their values ( numerically / alphabetically )
+  - ~~Can sort each columns with their values ( numerically / alphabetically )~~
 - Adding a function to easily add icon without using the $options array
 - Adding a way to manage the Filters on screen admin
   - Set an array to order them and keep an order
