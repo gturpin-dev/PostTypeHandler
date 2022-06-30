@@ -221,3 +221,6 @@ $post_type_handler->register();
 - Same columns but for the taxonomies
 - Can work on existing post types ( update options and labels )
 - Add the @link/author/license to the main class
+- Can delete row actions ( edit, view, trash, delete ) from the admin screen ( 'post_row_actions' )
+- Check if we can do the same for adding ones
+- Check to add/remove bulk edit actions
