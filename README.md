@@ -110,8 +110,6 @@ Finally you need to save the changes by registering the Post Type.
 To add new columns to a Post Type you can do the following
 
 ```php
-$post_type_handler = new PostType( 'Books' );
-
 // Call the columns function to get access to the column manager and add a new column
 $post_type_handler->columns()->add( [
 	'custom-slug' => __( 'Custom label', 'context' ),
@@ -120,15 +118,12 @@ $post_type_handler->columns()->add( [
 
 // You can also pass only one slug and label
 $post_type_handler->columns()->add( 'custom-slug', 'Custom label' );
-$post_type_handler->register();
 ```
 
 ### Hide a column
 To hide a column you can do the following
 
 ```php
-$post_type_handler = new PostType( 'Books' );
-
 // Call the columns function to get access to the column manager and hide a built-in column or a custom one
 $post_type_handler->columns()->hide( [
 	'custom-slug',
@@ -137,7 +132,6 @@ $post_type_handler->columns()->hide( [
 
 // You can also hide only one column
 $post_type_handler->columns()->hide( 'year' );
-$post_type_handler->register();
 ```
 
 ### Set all columns
@@ -145,15 +139,11 @@ You can set all columns at once
 By doing this you must take a look at the [Manage columns hook](https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/) to prevent unwanted columns
 
 ```php
-$post_type_handler = new PostType( 'Books' );
-
 // Call the columns function to get access to the column manager and set all columns
 $post_type_handler->columns()->set( [
 	'custom-slug' => 'Custom label',
 	'year'        => 'Year',
 ] );
-
-$post_type_handler->register();
 ```
 
 ### Populate a column
@@ -163,14 +153,10 @@ Note that you must display the content and not return it
 > You can't use this to populate a [built-in column](https://developer.wordpress.org/reference/hooks/manage_post_type_posts_columns/#more-information)
 
 ```php
-$post_type_handler = new PostType( 'Books' );
-
 // Call the columns function to get access to the column manager and populate a column
 $post_type_handler->columns()->populate( 'custom-slug', function( $column, $post_id ) {
 	echo get_the_title( $post_id );
 } );
-
-$post_type_handler->register();
 ```
 
 ### Make a column sortable
@@ -180,15 +166,11 @@ The value must be the name of the meta key
 Don't forget to populate the column before you make it sortable  
 
 ```php
-$post_type_handler = new PostType( 'Books' );
-
 // Call the columns function to get access to the column manager and make a column sortable
 $post_type_handler->columns()->sortable( [
 	'rating' => 'rating',
 	'year'   => [ 'year', true ], // You can add true to make the sort by numeric order or false to make it by alphabetical order which is the default
 ] );
-
-$post_type_handler->register();
 ```
 
 ### Adding taxonomy filters to the edit screen
