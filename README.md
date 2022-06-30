@@ -191,6 +191,17 @@ $post_type_handler->columns()->sortable( [
 $post_type_handler->register();
 ```
 
+### Adding taxonomy filters to the edit screen
+To add taxonomy filters to the edit screen you can do the following  
+You just have to add a list of taxonomies slug  
+The order is important because the filters will be displayed in the order you add them  
+
+```php
+$post_type_handler->set_taxonomy_filters( [
+	'custom-taxo',
+] );
+```
+
 ## Hooks
 
 | Hook type | Hook name                         | Params         | Description                          |
