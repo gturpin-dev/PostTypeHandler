@@ -4,6 +4,7 @@ namespace PostTypeHandler;
 
 use PostTypeHandler\Columns\Columns;
 use PostTypeHandler\Helpers\LabelsHandler;
+use PostTypeHandler\PostType\PostTypeFilters;
 use PostTypeHandler\Columns\ColumnsSortSortable;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
@@ -40,6 +41,11 @@ class PostType {
 	 * @var array Labels for the post type.
 	 */
 	private $labels;
+
+	/**
+	 * @var array Taxonomies filters for the post type admin edit screen.
+	 */
+	private $taxonomy_filters = [];
 
 	/**
 	 * @var array Taxonomies for the post type.
@@ -137,8 +143,14 @@ class PostType {
 	 */
 	public function register() {
 
+		// Register the post type
 		add_action( 'init', [ $this, 'register_post_type' ], 15 );
+
+		// Register taxonomies to the post type
 		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
+
+		// Modify filters on the admin edit screen
+        add_action( 'restrict_manage_posts', [ $this, 'update_admin_filters' ], 15, 2 );
 
 		if ( isset( $this->columns ) ) {
 			// Modify the admin columns for the post type
@@ -153,6 +165,19 @@ class PostType {
 			// Run action that sorts columns on request.
             add_action( 'pre_get_posts', [ $this, 'sort_sortable_columns' ], 15 );
 		}
+	}
+
+	/**
+	 * Update the admin filters for the post type
+	 *
+	 * @param string $post_type the post type slug
+	 * @param string $which the location of the filters (top, bottom)
+	 *
+	 * @return void
+	 */
+	public function update_admin_filters( string $post_type, string $which ) {
+		$post_type_filters = new PostTypeFilters( $this );
+		$post_type_filters->update_admin_filters( $post_type, $which );
 	}
 
 	/**
@@ -259,5 +284,22 @@ class PostType {
 		$taxonomy_formatter = new TaxonomyArrayFormatter();
 
 		return $this->taxonomies = $taxonomy_formatter->format( $taxonomies );
+	}
+
+	/**
+	 * Set the taxonomy filters for the post type
+	 *
+	 * @param array $taxonomy_filters Taxonomy filters.
+	 *
+	 * @return PostType The current instance of the class.
+	 */
+	public function set_taxonomy_filters( array $taxonomy_filters ) {
+		$this->taxonomy_filters = array_unique( $taxonomy_filters );
+		
+		return $this;
+	}
+
+	public function get_taxonomy_filters(): array {
+		return $this->taxonomy_filters;
 	}
 }

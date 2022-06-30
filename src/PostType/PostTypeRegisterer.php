@@ -6,6 +6,11 @@ use PostTypeHandler\PostType;
 
 final class PostTypeRegisterer {
 	
+	/**
+	 * The post type object.
+	 *
+	 * @var \PostTypeHandler\PostType
+	 */
 	private PostType $post_type;
 
 	public function __construct( PostType $post_type ) {
