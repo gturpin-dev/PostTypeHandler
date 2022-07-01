@@ -85,6 +85,37 @@ class PostType {
 	}
 
 	/**
+	 * Register the post type stuff
+	 *
+	 * @return void
+	 */
+	public function register() {
+
+		// Register the post type
+		add_action( 'init', [ $this, 'register_post_type' ], 15 );
+
+		// Register taxonomies to the post type
+		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
+
+		// Modify filters on the admin edit screen
+        add_action( 'restrict_manage_posts', [ $this, 'update_admin_filters' ], 15, 2 );
+
+		if ( isset( $this->columns ) ) {
+			// Modify the admin columns for the post type
+			add_filter( 'manage_' . $this->get_slug() . '_posts_columns', [ $this->columns, 'register' ], 15 );
+
+			// Populate the admin columns for the post type
+			add_action( 'manage_' . $this->get_slug() . '_posts_custom_column', [ $this->columns, 'populate_columns' ], 15, 2 );
+
+			// Run filter to make columns sortable.
+            add_filter( 'manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
+
+			// Run action that sorts columns on request.
+            add_action( 'pre_get_posts', [ $this, 'sort_sortable_columns' ], 15 );
+		}
+	}
+
+	/**
 	 * Making slug based on the name
 	 *
 	 * @return string Slug
@@ -134,37 +165,6 @@ class PostType {
 
 		$labels = $post_type_labels_manager->make_labels( $this );
 		return $this->set_labels( $labels );
-	}
-
-	/**
-	 * Register the post type stuff
-	 *
-	 * @return void
-	 */
-	public function register() {
-
-		// Register the post type
-		add_action( 'init', [ $this, 'register_post_type' ], 15 );
-
-		// Register taxonomies to the post type
-		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
-
-		// Modify filters on the admin edit screen
-        add_action( 'restrict_manage_posts', [ $this, 'update_admin_filters' ], 15, 2 );
-
-		if ( isset( $this->columns ) ) {
-			// Modify the admin columns for the post type
-			add_filter( 'manage_' . $this->get_slug() . '_posts_columns', [ $this->columns, 'register' ], 15 );
-
-			// Populate the admin columns for the post type
-			add_action( 'manage_' . $this->get_slug() . '_posts_custom_column', [ $this->columns, 'populate_columns' ], 15, 2 );
-
-			// Run filter to make columns sortable.
-            add_filter( 'manage_edit-' . $this->get_slug() . '_sortable_columns', [ $this->columns, 'sortable_columns' ], 15 );
-
-			// Run action that sorts columns on request.
-            add_action( 'pre_get_posts', [ $this, 'sort_sortable_columns' ], 15 );
-		}
 	}
 
 	/**

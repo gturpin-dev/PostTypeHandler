@@ -38,6 +38,13 @@ class Columns {
 	private $columns_to_sort = [];
 
 	/**
+	 * an Array to order the columns.
+	 *
+	 * @var array
+	 */
+	private $positions = [];
+
+	/**
 	 * The final set of columns.
 	 *
 	 * @var array
@@ -200,6 +207,20 @@ class Columns {
 	}
 
 	/**
+	* Define the postion for columns
+	*
+	* @param array $columns an array of columns
+	*                       key is the column slug and value is the position
+	*/
+	public function order( array $columns ) {
+		foreach ( $columns as $column => $position ) {
+			$this->positions[ $column ] = $position;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Register the columns for the post type.
 	 * 
 	 * @param array $columns The built in columns.
@@ -240,5 +261,9 @@ class Columns {
 
 	public function get_columns_to_sort() {
 		return $this->columns_to_sort;
+	}
+
+	public function get_positions() {
+		return $this->positions;
 	}
 }

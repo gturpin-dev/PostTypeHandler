@@ -205,7 +205,7 @@ $post_type_handler->set_taxonomy_filters( [
   - ~~Populate any column with a custom function~~
   - ~~Can sort each columns with their values ( numerically / alphabetically )~~
 - Adding a function to easily add icon without using the $options array
-- Adding a way to manage the Filters on screen admin
+- ~~Adding a way to manage the Filters on screen admin~~
   - Set an array to order them and keep an order
 - ~~Add a class to manage the taxonomies~~
   - ~~Adding new Taxonomies~~

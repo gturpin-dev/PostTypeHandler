@@ -36,6 +36,7 @@ final class ColumnsRegisterer {
 
 		$this->add_columns();
 		$this->hide_columns();
+		$this->order_columns();
 
 		return $this->columns;
 	}
@@ -66,6 +67,56 @@ final class ColumnsRegisterer {
 				unset( $this->columns[ $column ] );
 			}
 		}
+	}
+
+	/**
+	 * Order the columns from the columns object.
+	 *
+	 * TODO: Manage the same order number
+	 * TODO: Manage the negative values ?
+	 * 
+	 * @return void
+	 */
+	private function order_columns() {
+		$positions = $this->columns_handler->get_positions();
+		$columns   = $this->get_columns();
+
+		// bail early if there is nothing to order
+		if ( empty( $positions ) ) return;
+
+		// make a copy to work with
+		$copy_columns = $columns;
+
+		// remove the doublets from the positions array
+		foreach ( $positions as $column => $position ) {
+			unset( $copy_columns[ $column ] );
+		}
+		// Reindex properly
+		$copy_columns = array_flip( $copy_columns );
+		$copy_columns = array_values( $copy_columns );
+
+		// match positions format to columns array
+		$positions = array_flip( $positions );
+
+		// merge the two arrays with the right positions
+		foreach ( $copy_columns as $key => $value ) {
+			// check for the first available key in $positions
+			$available_index = 0;
+			while( isset( $positions[ $available_index ] ) ) $available_index++;
+			
+			// set the value to the available key
+			$positions[ $available_index ] = $value;
+		}
+
+		// reorder the columns array based on the position
+		$positions = array_flip( $positions );
+		asort( $positions );
+
+		// remake the array content
+		$new_columns = array_merge( $positions, $columns );
+		
+		// update the columns array
+		$this->set_columns( $new_columns );
 	}
 
 	/**
