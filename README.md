@@ -5,7 +5,8 @@ Helper class to quickly manage PostType and Taxonomy declarations
 - Easily add new Post Types
 - Easily add new Taxonomies
 - Easily link Post Types to Taxonomies & vice versa
-- Easily add new columns to the admin and manage them ( populate, sort )
+- Easily add new columns to the admin and manage them ( populate, sort, reorder )
+- Easily add admin taxonomy filters
 
 ## Installation
 
@@ -173,6 +174,22 @@ $post_type_handler->columns()->sortable( [
 ] );
 ```
 
+### Order the columns
+You may want to order the columns, even the native ones  
+To do that you can use the following  
+Here you set the final position, starting from 0  
+> Try to avoid duplicate position in your array, also avoid the negative positions
+
+```php
+$post_type_handler->columns()->order( [
+	'title'       => 5, // you can reorder the native columns
+	'cb'          => 15, // you can use large numbers to be sure that the column will be at the end
+	'custom-slug' => 1,
+	'rating'      => 3,
+	'author'      => 8,
+] );
+```
+
 ### Adding taxonomy filters to the edit screen
 To add taxonomy filters to the edit screen you can do the following  
 You just have to add a list of taxonomies slug  
@@ -200,13 +217,13 @@ $post_type_handler->set_taxonomy_filters( [
 - Adding a way to manage Columns
   - ~~Hide columns and defaults for each post type~~
   - ~~Adding new columns to the admin screen~~
-  - Set columns order
+  - ~~Set columns order~~
   - ~~Set the entire columns array~~
   - ~~Populate any column with a custom function~~
   - ~~Can sort each columns with their values ( numerically / alphabetically )~~
 - Adding a function to easily add icon without using the $options array
 - ~~Adding a way to manage the Filters on screen admin~~
-  - Set an array to order them and keep an order
+  - ~~Set an array to order them and keep an order~~
 - ~~Add a class to manage the taxonomies~~
   - ~~Adding new Taxonomies~~
   - Can work on existing taxonomies ( post_tag & category )
