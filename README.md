@@ -34,6 +34,13 @@ $post_type_handler = new PostType( 'Book' );
 $post_type_handler->register();
 ```
 
+You can set the dashicon like that :
+
+```php
+$post_type_handler->set_icon( 'dashicons-book' );
+$post_type_handler->set_icon( 'book' ); // will also work
+```
+
 You can add custom $options and $labels to the PostType declaration.
 
 ```php
