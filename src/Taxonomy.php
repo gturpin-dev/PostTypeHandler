@@ -11,6 +11,12 @@ use PostTypeHandler\Taxonomy\TaxonomyOptionsManager;
 
 /**
  * CLass to handle the registration of taxonomies
+ * 
+ * @package PostTypeHandler
+ * @link https://github.com/gturpin-dev/PostTypeHandler
+ * @author gturpin-dev
+ * @link https://github.com/gturpin-dev/
+ * @license GPL-3.0
  */
 class Taxonomy {
 

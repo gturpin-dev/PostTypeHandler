@@ -15,6 +15,12 @@ use PostTypeHandler\PostType\PostTypeOptionsManager;
 
 /**
  * Class to handle the registration of post types
+ * 
+ * @package PostTypeHandler
+ * @link https://github.com/gturpin-dev/PostTypeHandler
+ * @author gturpin-dev
+ * @link https://github.com/gturpin-dev/
+ * @license GPL-3.0
  */
 class PostType {
 
