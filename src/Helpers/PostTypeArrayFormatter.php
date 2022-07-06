@@ -7,7 +7,7 @@ use PostTypeHandler\PostType;
 /**
  * Class to format arrays of post types
  */
-class PostTypeArrayFormatter {
+final class PostTypeArrayFormatter {
 
 
 	/**

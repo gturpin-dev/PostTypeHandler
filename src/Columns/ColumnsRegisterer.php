@@ -87,7 +87,7 @@ final class ColumnsRegisterer {
 		// make a copy to work with
 		$copy_columns = $columns;
 
-		// remove the doublets from the positions array
+		// remove the doublets from the positions array TODO: check if we can replace that with array_diff
 		foreach ( $positions as $column => $position ) {
 			unset( $copy_columns[ $column ] );
 		}

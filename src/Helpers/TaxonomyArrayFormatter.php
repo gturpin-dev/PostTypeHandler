@@ -7,7 +7,7 @@ use PostTypeHandler\Taxonomy;
 /**
  * Class to format arrays of taxonomies
  */
-class TaxonomyArrayFormatter {
+final class TaxonomyArrayFormatter {
 
 
 	/**

@@ -38,6 +38,12 @@ final class PostTypeOptionsManager {
 		// replace defaults with the options passed
 		$options = array_replace_recursive( $options, $post_type->get_options() );
 
+		// Override icon if it set
+		$menu_icon = $post_type->get_icon();
+		if ( ! empty( $menu_icon ) ) {
+			$options[ 'menu_icon' ] = $menu_icon;
+		}
+		
 		return apply_filters( 'gt_post_type_' . $post_type->get_slug() . '_options', $options );
 	}
 }

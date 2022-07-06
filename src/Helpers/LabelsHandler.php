@@ -5,7 +5,7 @@ namespace PostTypeHandler\Helpers;
 /**
  * Helper to handle labels, text manipulation
  */
-class LabelsHandler {
+final class LabelsHandler {
 	
 	/**
 	 * Making slug based on the name

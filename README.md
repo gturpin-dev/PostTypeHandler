@@ -214,14 +214,14 @@ $post_type_handler->set_taxonomy_filters( [
 ## TODOS
 
 - ~~Can also add taxonomy by sending the object itself ( by the object itself, maybe with a __tostring method )~~
-- Adding a way to manage Columns
+- ~~Adding a way to manage Columns~~
   - ~~Hide columns and defaults for each post type~~
   - ~~Adding new columns to the admin screen~~
   - ~~Set columns order~~
   - ~~Set the entire columns array~~
   - ~~Populate any column with a custom function~~
   - ~~Can sort each columns with their values ( numerically / alphabetically )~~
-- Adding a function to easily add icon without using the $options array
+- ~~Adding a function to easily add icon without using the $options array~~
 - ~~Adding a way to manage the Filters on screen admin~~
   - ~~Set an array to order them and keep an order~~
 - ~~Add a class to manage the taxonomies~~

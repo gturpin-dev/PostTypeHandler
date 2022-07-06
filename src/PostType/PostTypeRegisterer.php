@@ -26,10 +26,10 @@ final class PostTypeRegisterer {
 	 */
 	public function register_post_type() {
 		if ( ! post_type_exists( $this->post_type->get_slug() ) ) {
-			$labels            = $this->post_type->get_labels();
-			$options           = $this->post_type->get_options();
+			$labels            = $this->post_type->make_labels();
+			$options           = $this->post_type->make_options();
 			$options['labels'] = $labels;
-			
+
 			return register_post_type( $this->post_type->get_slug(), $options );
 		}
 		

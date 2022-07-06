@@ -5,6 +5,7 @@ namespace PostTypeHandler;
 use PostTypeHandler\Columns\Columns;
 use PostTypeHandler\Helpers\LabelsHandler;
 use PostTypeHandler\PostType\PostTypeFilters;
+use PostTypeHandler\Helpers\DashiconFormatter;
 use PostTypeHandler\Columns\ColumnsSortSortable;
 use PostTypeHandler\PostType\PostTypeRegisterer;
 use PostTypeHandler\PostType\TaxonomyRegisterer;
@@ -31,6 +32,11 @@ class PostType {
 	 * @var string Slug of the post type. Generated from the name if not set.
 	 */
 	private $slug;
+
+	/**
+	 * @var string The dashicon to use for the post type.
+	 */
+	private $icon = '';
 
 	/**
 	 * @var array Options for the post type.
@@ -80,8 +86,6 @@ class PostType {
 	public function load(): void {
 		$this->make_slug();
 		$this->make_plural_name();
-		$this->make_options();
-		$this->make_labels();
 	}
 
 	/**
@@ -286,6 +290,10 @@ class PostType {
 		return $this->taxonomies = $taxonomy_formatter->format( $taxonomies );
 	}
 
+	public function get_taxonomy_filters(): array {
+		return $this->taxonomy_filters;
+	}
+
 	/**
 	 * Set the taxonomy filters for the post type
 	 *
@@ -299,7 +307,22 @@ class PostType {
 		return $this;
 	}
 
-	public function get_taxonomy_filters(): array {
-		return $this->taxonomy_filters;
+	public function get_icon(): string {
+		return $this->icon;
+	}
+
+	/**
+	 * Set the icon for the post type
+	 *
+	 * @param string $icon Icon slug from wp dashicons.
+	 * 
+	 * @see https://developer.wordpress.org/resource/dashicons/ WP Dashicons
+	 *
+	 * @return string The current icon slug.
+	 */
+	public function set_icon( string $icon ): string {
+		$dashicon_formatter = new DashiconFormatter();
+		
+		return $this->icon = $dashicon_formatter->format( $icon );
 	}
 }
