@@ -27,6 +27,7 @@ final class PostTypeLabelsManager {
 			'edit_item'          => __( 'Edit ' . $post_type->get_name(), '' ),
 			'new_item'           => __( 'New ' . $post_type->get_name(), '' ),
 			'view_item'          => __( 'View ' . $post_type->get_name(), '' ),
+			'view_items'         => __( 'View ' . $post_type->get_plural_name(), '' ),
 			'search_items'       => __( 'Search ' . $post_type->get_plural_name(), '' ),
 			'not_found'          => __( 'No ' . $post_type->get_plural_name() . ' found.', '' ),
 			'not_found_in_trash' => __( 'No ' . $post_type->get_plural_name() . ' found in Trash.', '' ),
