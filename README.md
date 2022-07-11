@@ -241,3 +241,4 @@ $post_type_handler->set_taxonomy_filters( [
 - Can delete row actions ( edit, view, trash, delete ) from the admin screen ( 'post_row_actions' )
 - Check if we can do the same for adding ones
 - Check to add/remove bulk edit actions
+- Check if we can add/update/remove the list above the bulk actions ( all / published etc ... )
