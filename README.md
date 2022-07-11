@@ -2,7 +2,7 @@
 Helper class to quickly manage PostType and Taxonomy declarations
 
 ## Features
-- Easily add new Post Types
+- Easily add new Post Types or update existing ones
 - Easily add new Taxonomies
 - Easily link Post Types to Taxonomies & vice versa
 - Easily add new columns to the admin and manage them ( populate, sort, reorder )
@@ -235,9 +235,9 @@ $post_type_handler->set_taxonomy_filters( [
   - ~~Adding new Taxonomies~~
   - Can work on existing taxonomies ( post_tag & category )
   - ~~Can be registered on a post type directly ( by the slug or the object itself, maybe with a __tostring method )~~
-- Same columns but for the taxonomies
-- Can work on existing post types ( update options and labels )
+- ~~Can work on existing post types ( update options and labels )~~
 - ~~Add the @link/author/license to the main class~~
+- Same columns but for the taxonomies
 - Can delete row actions ( edit, view, trash, delete ) from the admin screen ( 'post_row_actions' )
 - Check if we can do the same for adding ones
 - Check to add/remove bulk edit actions
