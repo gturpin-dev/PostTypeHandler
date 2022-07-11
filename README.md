@@ -149,8 +149,8 @@ By doing this you must take a look at the [Manage columns hook](https://develope
 ```php
 // Call the columns function to get access to the column manager and set all columns
 $post_type_handler->columns()->set( [
-	'custom-slug' => 'Custom label',
-	'year'        => 'Year',
+	'custom-slug' => __( 'Custom label', 'context' ),
+	'year'        => __( 'Year', 'context' ),
 ] );
 ```
 

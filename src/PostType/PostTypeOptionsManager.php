@@ -23,7 +23,6 @@ final class PostTypeOptionsManager {
 			],
 			'menu_position'   => 6,
 			'capability_type' => 'page',
-			'hierarchical'    => true,
 			'has_archive'     => true,
 			'hierarchical'    => false,
 			'menu_icon'       => 'dashicons-admin-generic',

@@ -35,4 +35,28 @@ final class PostTypeRegisterer {
 		
 		return false;
 	}
+
+	/**
+	 * Update an existing post type with new options.
+	 *
+	 * @param array $args The current options.
+	 * @param string $post_type_slug The current post type slug.
+	 * 
+	 * @see https://developer.wordpress.org/reference/hooks/register_post_type_args/
+	 *
+	 * @return array The updated options.
+	 */
+	public function update_post_type( array $args, string $post_type_slug ) {
+		// Bail early if it's not the right post type.
+		if ( $this->post_type->get_slug() !== $post_type_slug ) return $args;
+
+		$labels            = $this->post_type->get_labels();
+		$options           = $this->post_type->get_options();
+		$options['labels'] = $labels;
+
+		// Update the post type with the new labels and options.
+		$args = array_replace_recursive( $args, $options );
+
+		return $args;
+	}
 }

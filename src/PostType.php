@@ -104,6 +104,9 @@ class PostType {
 		// Register the post type
 		add_action( 'init', [ $this, 'register_post_type' ], 15 );
 
+		// Update the post type for existing ones | Can't fire conditionally because of the 'init' hook.
+		add_action( 'register_post_type_args', [ $this, 'update_post_type' ], 15, 2 );
+
 		// Register taxonomies to the post type
 		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
 
@@ -187,6 +190,7 @@ class PostType {
 	 */
 	public function update_admin_filters( string $post_type, string $which ) {
 		$post_type_filters = new PostTypeFilters( $this );
+
 		$post_type_filters->update_admin_filters( $post_type, $which );
 	}
 
@@ -199,6 +203,20 @@ class PostType {
 		$post_type_registerer = new PostTypeRegisterer( $this );
 
 		return $post_type_registerer->register_post_type();
+	}
+
+	/**
+	 * Update an existing post type with new options.
+	 *
+	 * @param array $args The current options.
+	 * @param string $post_type_slug The current post type slug.
+	 * 
+	 * @return void
+	 */
+	public function update_post_type( array $args, string $post_type_slug ) {
+		$post_type_registerer = new PostTypeRegisterer( $this );
+
+		return $post_type_registerer->update_post_type( $args, $post_type_slug );
 	}
 
 	/**
