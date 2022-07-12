@@ -107,6 +107,18 @@ $post_type_handler->set_taxonomies( $taxonomy_handler ); // work aswell with an 
 $post_type_handler->register();
 ```
 
+You can do the same with an existing CPT, like Post :
+
+```php
+$posts = new PostType( 'Post' );
+$posts->columns()->add( 'id' );
+$posts->columns()->populate( 'id', function( $column, $post_id ) {
+	echo $post_id;
+} );
+$posts->set_taxonomies( 'custom-taxo' );
+$posts->register();
+```
+
 ## Manage Post Types columns
 I will explain some examples of how to manage the columns for a Post Type.  
 
