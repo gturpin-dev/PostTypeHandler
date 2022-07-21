@@ -22,8 +22,8 @@ final class TaxonomyRegisterer {
 	 */
 	public function register_taxonomy() {
 		if ( ! taxonomy_exists( $this->taxonomy->get_slug() ) ) {
-			$labels            = $this->taxonomy->get_labels();
-			$options           = $this->taxonomy->get_options();
+			$labels            = $this->taxonomy->make_labels();
+			$options           = $this->taxonomy->make_options();
 			$options['labels'] = $labels;
 
 			return register_taxonomy( $this->taxonomy->get_slug(), null, $options );

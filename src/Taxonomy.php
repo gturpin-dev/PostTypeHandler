@@ -73,8 +73,6 @@ class Taxonomy {
 	public function load(): void {
 		$this->make_slug();
 		$this->make_plural_name();
-		$this->make_options();
-		$this->make_labels();
 	}
 
 	/**
