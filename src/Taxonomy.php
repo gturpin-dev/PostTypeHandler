@@ -24,6 +24,11 @@ class Taxonomy {
 	 * @var string Name of the taxonomy.
 	 */
 	private $name;
+	
+	/**
+	 * @var string Plural name of the taxonomy.
+	 */
+	private $plural_name;
 
 	/**
 	 * @var string Slug of the taxonomy. Generated from the name if not set.
