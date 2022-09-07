@@ -17,7 +17,7 @@ final class PostTypeLabelsManager {
 
 		// default labels
 		$labels = [
-			'name'               => __( $post_type->get_name() ),
+			'name'               => __( $post_type->get_plural_name() ),
 			'singular_name'      => __( $post_type->get_name() ),
 			'menu_name'          => __( $post_type->get_plural_name() ),
 			'all_items'          => __( $post_type->get_plural_name() ),
