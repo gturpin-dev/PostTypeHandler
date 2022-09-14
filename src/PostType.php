@@ -102,13 +102,13 @@ class PostType {
 	public function register() {
 
 		// Register the post type
-		add_action( 'init', [ $this, 'register_post_type' ], 15 );
+		add_action( 'init', [ $this, 'register_post_type' ] );
 
 		// Update the post type for existing ones | Can't fire conditionally because of the 'init' hook.
 		add_action( 'register_post_type_args', [ $this, 'update_post_type' ], 15, 2 );
 
 		// Register taxonomies to the post type
-		add_action( 'init', [ $this, 'register_taxonomies' ], 15 );
+		add_action( 'init', [ $this, 'register_taxonomies' ] );
 
 		// Modify filters on the admin edit screen
         add_action( 'restrict_manage_posts', [ $this, 'update_admin_filters' ], 15, 2 );

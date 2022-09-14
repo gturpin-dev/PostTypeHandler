@@ -134,8 +134,8 @@ class Taxonomy {
 	 */
 	public function register() {
 
-		add_action( 'init', [ $this, 'register_taxonomy' ], 15 );
-		add_action( 'init', [ $this, 'register_post_types' ], 15 );
+		add_action( 'init', [ $this, 'register_taxonomy' ] );
+		add_action( 'init', [ $this, 'register_post_types' ] );
 		
 	}
 
