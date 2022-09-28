@@ -31,6 +31,7 @@ final class PostTypeOptionsManager {
 				'editor',
 				'thumbnail',
 				'excerpt',
+				'revisions'
 			],
 		];
 
