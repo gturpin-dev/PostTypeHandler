@@ -3,9 +3,12 @@
 namespace PostTypeHandler\PostType;
 
 use PostTypeHandler\PostType;
+use PostTypeHandler\PostType\Exceptions\PostTypeNameEmptyException;
+use PostTypeHandler\PostType\Exceptions\PostTypeNameLimitException;
 
 final class PostTypeRegisterer {
-	
+	private const KEY_MAX_LENGTH = 20;
+
 	/**
 	 * The post type object.
 	 *
@@ -19,13 +22,15 @@ final class PostTypeRegisterer {
 
 	/**
 	 * Register the post type only if it doesn't already exist.
-	 * 
+	 *
 	 * @see https://developer.wordpress.org/reference/functions/register_post_type/
 	 *
 	 * @return WP_Post_Type|WP_Error|bool The registered post type object on success, WP_Error object on failure or False if the post type already exists.
+	 * @throws PostTypeNameLimitException
+	 * @throws PostTypeNameEmptyException
 	 */
 	public function register_post_type() {
-		if ( ! post_type_exists( $this->post_type->get_slug() ) ) {
+		if ( ! post_type_exists( $this->post_type->get_slug() ) && $this->is_valid_slug( $this->post_type->get_slug() ) ) {
 			$labels            = $this->post_type->make_labels();
 			$options           = $this->post_type->make_options();
 			$options['labels'] = $labels;
@@ -58,5 +63,30 @@ final class PostTypeRegisterer {
 		$args = array_replace_recursive( $args, $options );
 
 		return $args;
+	}
+
+
+	/**
+	 * Check if the Post Type slug is valid (not empty and not exceed KEY_MAX_LENGTH characters).
+	 *
+	 * @param string $slug
+	 *
+	 * @return bool
+	 * @throws PostTypeNameLimitException
+	 * @throws PostTypeNameEmptyException
+	 */
+	private function is_valid_slug( string $slug ): bool {
+		if ( empty( $slug ) ) {
+			throw new PostTypeNameEmptyException( 'The post type cannot be empty.' );
+		}
+
+		if ( strlen( $slug ) > self::KEY_MAX_LENGTH ) {
+			throw new PostTypeNameLimitException( sprintf(
+				'The post type name must no exceed $d characters.',
+				self::KEY_MAX_LENGTH
+			) );
+		}
+
+		return true;
 	}
 }
