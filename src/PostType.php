@@ -125,6 +125,9 @@ class PostType {
 
 			// Run action that sorts columns on request.
             add_action( 'pre_get_posts', [ $this, 'sort_sortable_columns' ], 15 );
+
+			// Run filter to disable bulk editing if the checkbox column is hidden
+			add_filter( 'bulk_actions-edit-' . $this->get_slug(), [ $this, 'maybe_disable_bulk_actions' ], 15, 1 );
 		}
 	}
 
@@ -252,6 +255,25 @@ class PostType {
 	public function sort_sortable_columns( \WP_Query $query ) {
 		$sort_sortable_columns = new ColumnsSortSortable( $this );
 		$sort_sortable_columns->sort_column( $query );
+	}
+
+	/**
+	 * Maybe disable Bulk Actions on the post type editor table if the `cb`
+	 * checkbox column is hidden.
+	 *
+	 * @see https://developer.wordpress.org/reference/hooks/bulk_actions-this-screen-id/
+	 *
+	 * @param array $actions An array of the available bulk actions.
+	 *
+	 * @return array The array of the available bulk actions. Empty if disabled.
+	 */
+	public function maybe_disable_bulk_actions( $actions ) {
+		// If the checkbox column is hidden, there is no way to select
+		// records for bulk actions!
+		if ( in_array( 'cb', $this->columns->get_columns_to_hide(), true ) ) {
+			$actions = [];
+		}
+		return $actions;
 	}
 
 	/**
