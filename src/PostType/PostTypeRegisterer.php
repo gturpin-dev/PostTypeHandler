@@ -5,6 +5,7 @@ namespace PostTypeHandler\PostType;
 use PostTypeHandler\PostType;
 use PostTypeHandler\PostType\Exceptions\PostTypeNameEmptyException;
 use PostTypeHandler\PostType\Exceptions\PostTypeNameLimitException;
+use PostTypeHandler\PostType\Exceptions\PostTypeSlugConflictException;
 
 final class PostTypeRegisterer {
 	private const KEY_MAX_LENGTH = 20;
