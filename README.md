@@ -30,7 +30,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use PostTypeHandler\PostType;
 
-$post_type_handler = new PostType( 'Books' );
+$post_type_handler = new PostType( 'Book' );
 $post_type_handler->register();
 ```
 
@@ -58,14 +58,14 @@ $options = [
 	],
 ];
 
-$post_type_handler = new PostType( 'Books', $options, $labels );
+$post_type_handler = new PostType( 'Book', $options, $labels );
 $post_type_handler->register();
 ```
 
 You can also set the taxonomies for the PostType if they are previously registered.
 
 ```php
-$post_type_handler = new PostType( 'Books' );
+$post_type_handler = new PostType( 'Book' );
 
 // add multiple taxonomies
 $post_type_handler->set_taxonomies( [ 'custom-taxonomy', 'post_tag' ] );
@@ -85,7 +85,7 @@ $taxonomy_handler = new Taxonomy( 'custom-taxonomy' );
 $taxonomy_handler->register();
 
 // Add it to the PostType in PostType declaration
-$post_type_handler = new PostType( 'Books' );
+$post_type_handler = new PostType( 'Book' );
 $post_type_handler->set_taxonomies( 'custom-taxonomy' );
 $post_type_handler->register();
 ```
@@ -95,8 +95,8 @@ Or you can set the taxonomy to a Post Type that is already registered.
 ```php
 $taxonomy_handler = new Taxonomy( 'custom-taxonomy' );
 // This is a post type slug and must be lower case!
-// Also works with an array and/or variable: [ 'books', $post_type_handler ]
-$taxonomy_handler->set_post_types( 'books' );
+// Also works with an array and/or variable: [ 'book', $post_type_handler ]
+$taxonomy_handler->set_post_types( 'book' );
 $taxonomy_handler->register();
 ```
 
@@ -106,7 +106,7 @@ You can give the Taxonomy object itself to the PostType.
 $taxonomy_handler = new Taxonomy( 'custom-taxonomy' );
 $taxonomy_handler->register();
 
-$post_type_handler = new PostType( 'Books' );
+$post_type_handler = new PostType( 'Book' );
 // Also works with an array : [ 'post_tag', $taxonomy_handler ]
 $post_type_handler->set_taxonomies( $taxonomy_handler );
 $post_type_handler->register();
