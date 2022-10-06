@@ -85,7 +85,7 @@ final class PostTypeRegisterer {
 
 		if ( strlen( $slug ) > self::KEY_MAX_LENGTH ) {
 			throw new PostTypeNameLimitException( sprintf(
-				'The post type name must no exceed $d characters.',
+				'The post type name must no exceed %d characters.',
 				self::KEY_MAX_LENGTH
 			) );
 		}
@@ -97,14 +97,18 @@ final class PostTypeRegisterer {
 		 *
 		 * @param boolean $check_slug_conflict Whether to check for slug conflicts.
 		 */
-		$check_slug_conflict = (bool) apply_filters( 'gt_post_type_' . $this->post_type->get_slug() . '_check_slug_conflict', true );
+		$wp_debug            = defined( 'WP_DEBUG' ) ? WP_DEBUG : false;
+		$check_slug_conflict = (bool) apply_filters( 'gt_post_type_' . $this->post_type->get_slug() . '_check_slug_conflict', $wp_debug );
+		
 		if ( $check_slug_conflict ) {
 			// Replicate slug check logic from the wp-includes/post.php wp_unique_post_slug() function.
 			global $wpdb;
+			
 			$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s LIMIT 1";
 			$post_name_query = $wpdb->get_var( $wpdb->prepare( $check_sql, $this->post_type->get_slug() ) );
+
 			if ( $post_name_query ) {
-				throw new PostTypeSlugConflictException( 'Post type conflicts with existing post_name slug.' );
+				throw new PostTypeSlugConflictException( 'Post type "' . $this->post_type->get_slug() . '" slug conflicts with existing post_name slug.' );
 			}
 		}
 
