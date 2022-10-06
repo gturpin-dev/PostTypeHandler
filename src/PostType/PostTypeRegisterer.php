@@ -68,12 +68,14 @@ final class PostTypeRegisterer {
 
 
 	/**
-	 * Check if the Post Type slug is valid (not empty, not exceed KEY_MAX_LENGTH characters,
-	 * not conflict with existing slug).
+	 * Check if the Post Type slug is valid e.g. 
+	 * Not empty.
+	 * Not exceed KEY_MAX_LENGTH characters.
+	 * Not conflict with existing slug.
 	 *
-	 * @param string $slug
+	 * @param string $slug the post type slug.
 	 *
-	 * @return bool
+	 * @return bool True if the slug is valid, false otherwise.
 	 * @throws PostTypeNameLimitException
 	 * @throws PostTypeNameEmptyException
 	 * @throws PostTypeSlugConflictException
@@ -89,27 +91,33 @@ final class PostTypeRegisterer {
 				self::KEY_MAX_LENGTH
 			) );
 		}
-
-		/**
-		 * Filters whether to check for slug conflicts with existing Page, Post,
-		 * and Custom Post Type records. Checking requires a DB query, which
-		 * may be avoided.
-		 *
-		 * @param boolean $check_slug_conflict Whether to check for slug conflicts.
-		 */
+		
 		$wp_debug            = defined( 'WP_DEBUG' ) ? WP_DEBUG : false;
 		$check_slug_conflict = (bool) apply_filters( 'gt_post_type_' . $this->post_type->get_slug() . '_check_slug_conflict', $wp_debug );
-		
-		if ( $check_slug_conflict ) {
-			// Replicate slug check logic from the wp-includes/post.php wp_unique_post_slug() function.
-			global $wpdb;
-			
-			$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s LIMIT 1";
-			$post_name_query = $wpdb->get_var( $wpdb->prepare( $check_sql, $this->post_type->get_slug() ) );
 
-			if ( $post_name_query ) {
-				throw new PostTypeSlugConflictException( 'Post type "' . $this->post_type->get_slug() . '" slug conflicts with existing post_name slug.' );
-			}
+		if ( $check_slug_conflict ) {
+			$this->check_slug_conflict();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check for slug conflicts with posts slugs
+	 *
+	 * @return bool True if the slug is valid, false otherwise.
+	 * @throws PostTypeSlugConflictException
+	 */
+	private function check_slug_conflict(): bool {
+		$existing_posts = get_posts( [
+			'post_type'      => 'any',
+			'post_status'    => 'any',
+			'posts_per_page' => 1,
+			'name'           => $this->post_type->get_slug(),
+		] );
+
+		if ( ! empty( $existing_posts ) ) {
+			throw new PostTypeSlugConflictException( 'Post type "' . $this->post_type->get_slug() . '" slug conflicts with existing post slug.' );
 		}
 
 		return true;
