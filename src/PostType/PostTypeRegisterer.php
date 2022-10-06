@@ -5,6 +5,7 @@ namespace PostTypeHandler\PostType;
 use PostTypeHandler\PostType;
 use PostTypeHandler\PostType\Exceptions\PostTypeNameEmptyException;
 use PostTypeHandler\PostType\Exceptions\PostTypeNameLimitException;
+use PostTypeHandler\PostType\Exceptions\PostTypeSlugConflictException;
 
 final class PostTypeRegisterer {
 	private const KEY_MAX_LENGTH = 20;
@@ -67,13 +68,15 @@ final class PostTypeRegisterer {
 
 
 	/**
-	 * Check if the Post Type slug is valid (not empty and not exceed KEY_MAX_LENGTH characters).
+	 * Check if the Post Type slug is valid (not empty, not exceed KEY_MAX_LENGTH characters,
+	 * not conflict with existing slug).
 	 *
 	 * @param string $slug
 	 *
 	 * @return bool
 	 * @throws PostTypeNameLimitException
 	 * @throws PostTypeNameEmptyException
+	 * @throws PostTypeSlugConflictException
 	 */
 	private function is_valid_slug( string $slug ): bool {
 		if ( empty( $slug ) ) {
@@ -85,6 +88,24 @@ final class PostTypeRegisterer {
 				'The post type name must no exceed $d characters.',
 				self::KEY_MAX_LENGTH
 			) );
+		}
+
+		/**
+		 * Filters whether to check for slug conflicts with existing Page, Post,
+		 * and Custom Post Type records. Checking requires a DB query, which
+		 * may be avoided.
+		 *
+		 * @param boolean $check_slug_conflict Whether to check for slug conflicts.
+		 */
+		$check_slug_conflict = (bool) apply_filters( 'gt_post_type_' . $this->post_type->get_slug() . '_check_slug_conflict', true );
+		if ( $check_slug_conflict ) {
+			// Replicate slug check logic from the wp-includes/post.php wp_unique_post_slug() function.
+			global $wpdb;
+			$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s LIMIT 1";
+			$post_name_query = $wpdb->get_var( $wpdb->prepare( $check_sql, $this->post_type->get_slug() ) );
+			if ( $post_name_query ) {
+				throw new PostTypeSlugConflictException( 'Post type conflicts with existing post_name slug.' );
+			}
 		}
 
 		return true;

@@ -242,12 +242,13 @@ $post_type_handler->set_taxonomy_filters( [
 
 ## Hooks
 
-| Hook type | Hook name                         | Params         | Description                          |
-| --------- | --------------------------------- | -------------- | ------------------------------------ |
-| Filter    | gt_post_type_{$post_type}_labels  | array $labels  | Custom the labels for the post type  |
-| Filter    | gt_post_type_{$post_type}_options | array $options | Custom the options for the post type |
-| Filter    | gt_taxonomy_{$post_type}_labels   | array $labels  | Custom the labels for the taxonomy   |
-| Filter    | gt_taxonomy_{$post_type}_options  | array $options | Custom the options for the taxonomy  |
+| Hook type | Hook name                                     | Params         | Description                                  |
+| --------- | --------------------------------------------- | -------------- | -------------------------------------------- |
+| Filter    | gt_post_type_{$post_type}_labels              | array $labels  | Custom the labels for the post type          |
+| Filter    | gt_post_type_{$post_type}_options             | array $options | Custom the options for the post type         |
+| Filter    | gt_post_type_{$post_type}_check_slug_conflict | boolean $check | Check for slug conflicts. Requires DB query. |
+| Filter    | gt_taxonomy_{$post_type}_labels               | array $labels  | Custom the labels for the taxonomy           |
+| Filter    | gt_taxonomy_{$post_type}_options              | array $options | Custom the options for the taxonomy          |
 
 
 ## TODOS
