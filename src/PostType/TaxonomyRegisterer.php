@@ -25,7 +25,7 @@ final class TaxonomyRegisterer {
 		
 		if ( ! empty( $taxonomies ) ) {
 			foreach ( $taxonomies as $taxonomy ) {
-				register_taxonomy_for_object_type( $taxonomy, $this->post_type->get_slug() );
+				$this->add_taxonomy( $taxonomy );
 			}
 		}
 
@@ -37,13 +37,24 @@ final class TaxonomyRegisterer {
 	}
 
 	/**
+	 * Add a taxonomy to the post type.
+	 *
+	 * @param string $taxonomy Taxonomy name.
+	 *
+	 * @return void
+	 */
+	public function add_taxonomy( string $taxonomy ): void {
+		register_taxonomy_for_object_type( $taxonomy, $this->post_type->get_slug() );
+	}
+
+	/**
 	 * Remove a taxonomy from the post type.
 	 *
 	 * @param string $taxonomy Taxonomy name.
 	 *
 	 * @return void
 	 */
-	public function remove_taxonomy( string $taxonomy ) {
+	public function remove_taxonomy( string $taxonomy ): void {
 		unregister_taxonomy_for_object_type( $taxonomy, $this->post_type->get_slug() );
 	}
 }
