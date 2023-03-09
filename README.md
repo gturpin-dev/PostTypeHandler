@@ -120,6 +120,14 @@ $posts->set_taxonomies( 'custom-taxonomy' );
 $posts->register();
 ```
 
+You can also remove a taxonomy from a Post Type.
+
+```php
+$posts = new PostType( 'Post' );
+$posts->remove_taxonomy( 'post_tag' );
+$posts->register();
+```
+
 ## Manage Post Types columns
 I will explain some examples of how to manage the columns for a Post Type.
 
