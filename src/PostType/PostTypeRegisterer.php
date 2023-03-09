@@ -66,7 +66,6 @@ final class PostTypeRegisterer {
 		return $args;
 	}
 
-
 	/**
 	 * Check if the Post Type slug is valid e.g. 
 	 * Not empty.

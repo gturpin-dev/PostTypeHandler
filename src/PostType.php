@@ -65,6 +65,11 @@ class PostType {
 	private $taxonomies = [];
 
 	/**
+	 * @var array Taxonomies to remove from the post type.
+	 */
+	private $taxonomies_to_remove = [];
+
+	/**
 	 * @var Columns Columns for the post type.
 	 */
 	private Columns $columns;
@@ -233,6 +238,19 @@ class PostType {
 	}
 
 	/**
+	 * Remove a taxonomy from the post type.
+	 *
+	 * @param string $taxonomy_slug
+	 *
+	 * @return void
+	 */
+	public function remove_taxonomy( string $taxonomy_slug ) {
+		if ( ! in_array( $taxonomy_slug, $this->taxonomies_to_remove ) ) {
+			$this->taxonomies_to_remove[] = $taxonomy_slug;
+		}
+	}
+
+	/**
 	 * Get the Column Manager for the post type.
 	 *
 	 * @return PostTypeHandler\Columns\Columns
@@ -321,6 +339,10 @@ class PostType {
 
 	public function get_taxonomies(): array {
 		return $this->taxonomies;
+	}
+
+	public function get_taxonomies_to_remove(): array {
+		return $this->taxonomies_to_remove;
 	}
 
 	/**
