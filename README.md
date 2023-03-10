@@ -2,7 +2,7 @@
 Helper class to quickly manage PostType and Taxonomy declarations
 
 [![Packagist](https://img.shields.io/packagist/v/gturpin/post-type-handler.svg?style=flat-square&colorB=blue)](https://packagist.org/packages/gturpin/post-type-handler?color=red)
-[![Packagist](https://img.shields.io/packagist/dt/gturpin/post-type-handler.svg?style=flat-square&label=projects%20created&colorB=blue)](https://packagist.org/packages/gturpin/post-type-handler)
+[![Packagist](https://img.shields.io/packagist/dt/gturpin/post-type-handler.svg?style=flat-square&colorB=blue)](https://packagist.org/packages/gturpin/post-type-handler)
 
 ## Features
 - Easily add new Post Types or update existing ones
