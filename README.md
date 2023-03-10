@@ -1,6 +1,10 @@
 # PostTypeHandler
 Helper class to quickly manage PostType and Taxonomy declarations
 
+[![Packagist](https://img.shields.io/packagist/v/gturpin-dev/posttypehandler.svg?style=flat-square&colorB=blue)](https://packagist.org/packages/gturpin-dev/posttypehandler?color=red)
+[![Packagist](https://img.shields.io/packagist/dt/gturpin-dev/posttypehandler.svg?style=flat-square&label=projects%20created&colorB=blue)](https://packagist.org/packages/gturpin-dev/posttypehandler)
+
+
 ## Features
 - Easily add new Post Types or update existing ones
 - Easily add new Taxonomies
