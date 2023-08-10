@@ -30,8 +30,11 @@ class ColumnsSortSortable {
 		if ( ! is_admin() ) return;
 		if ( $query->get( 'post_type' ) !== $this->post_type_handler->get_slug() ) return;
 		
-		$order_by = $query->get( 'orderby' );
-		
+		// Bail if we are in the customizer
+		global $current_screen;
+		if ( isset( $current_screen->base ) && $current_screen->base === 'customize' ) return;
+
+		$order_by       = $query->get( 'orderby' );
 		$columns_object = $this->post_type_handler->columns();
 		
 		// bail early if the column isn't sortable
@@ -40,7 +43,7 @@ class ColumnsSortSortable {
 		// Get the custom column options
 		$meta = $columns_object->retrieve_sortable_meta( $order_by );
 
-		// Determine the typo of ordering to use
+		// Determine the type of ordering to use
 		if ( is_string( $meta ) || ! isset( $meta[1] ) ) {
 			$meta_key   = $meta;
 			$meta_value = 'meta_value';
