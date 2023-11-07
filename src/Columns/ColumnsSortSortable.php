@@ -38,6 +38,7 @@ class ColumnsSortSortable {
 		$columns_object = $this->post_type_handler->columns();
 		
 		// bail early if the column isn't sortable
+		if ( ! is_string( $order_by ) ) return;
 		if ( ! $columns_object->is_sortable( $order_by ) ) return;
 
 		// Get the custom column options
