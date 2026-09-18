@@ -21,6 +21,8 @@ Run the following in your terminal to install the package with composer
 composer require gturpin/post-type-handler
 ```
 
+Requires PHP 7.4 or higher.
+
 The package use the autoloader, so don't forget to register the autoloader.
 If you don't know how see the basic example below.
 
